@@ -1,4 +1,4 @@
 ansible_user: opc
 ansible_ssh_private_key_file: '{{ inventory_dir }}/host_vars/163.192.193.160.key'
 minecraft_settings:
-  modpack: Stoneblock_4
+  modpack: Jaffa_Factory_2

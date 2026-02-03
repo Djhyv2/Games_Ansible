@@ -19,6 +19,7 @@ The Minecraft server will be installed as a systemd daemon and will auto restart
 
 When executing the playbook, ensure the whole repository is not world writable else the ansible.cfg file will not be read. (i.e. chmod 770 on the directory)
 
+Run ansible commands with `ansible-playbook -i inventory playbooks/(playbook name).yaml`
 
 References:
 

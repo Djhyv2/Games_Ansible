@@ -34,7 +34,7 @@
 	feralFlareTickRate = 5
 	#The target minimum light level to place lights for
 	#Range: 0 ~ 15
-	feralFlareMinLightLevel = 10
+	feralFlareMinLightLevel = 12
 	#The maximum amount of invisble lights a feral flare lantern can place. Set to 0 to disable light placement.
 	#Warning: Setting this value too high in conjunction with the feralFlareMinLightLevel and Radius can lead to world corruption!
 	#(Badly compressed packet error)
