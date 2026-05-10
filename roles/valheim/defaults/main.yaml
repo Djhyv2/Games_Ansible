@@ -1,0 +1,3 @@
+default_valheim_settings:
+  server_port: 2456
+  server_password: Password

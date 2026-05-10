@@ -1,7 +1,14 @@
-A simple Ansible playbook to deploy a Minecraft Modpack onto a Linux (tested with Oracle Linux 9) machine.
+A simple Ansible playbook to deploy Games onto a Linux (tested with Oracle Linux 9) machine.
 
+When executing the playbook, ensure the whole repository is not world writable else the ansible.cfg file will not be read. (i.e. chmod 770 on the directory)
 
-Inventory should include authentication, modpack, and optionally port for each host. New hosts will need to be added to the minecraft group in the inventory/hosts.yaml file.
+Run ansible commands with `ansible-playbook -i inventory playbooks/(playbook name).yaml`
+
+Inventory should include authentication for each host, including the ssh user and path to key file.
+
+# Minecraft
+
+Inventory should include modpack and any optional configurable server.properties values (See server.properties.j2 file for currently configurable options). New hosts will need to be added to the minecraft group in the inventory/hosts.yaml file.
 
 Minecraft role includes the shared config used across modpacks and a set of default_minecraft_settings that takes a lower precedence than modpack or host specific settings.
 Additional roles exist for Modpacks in the form of directories with mods, configs, a populated variables.txt, and any other needed files. Modpack roles have a default_minecraft_modpack_settings var that is higher precedence than the overall default, but lower precedence than host or group vars.
@@ -16,12 +23,17 @@ The Minecraft server uses Jabba to source its Java rather than relying on a syst
 
 The Minecraft server will be installed as a systemd daemon and will auto restart in the event of a crash.
 
+# Valheim 
 
-When executing the playbook, ensure the whole repository is not world writable else the ansible.cfg file will not be read. (i.e. chmod 770 on the directory)
+Inventory should include any optional configurable start_server.sh values (See start_server.sh.j2 file for currently configurable options). New hosts will need to be added to the valheim group in the inventory/hosts.yaml file.
 
-Run ansible commands with `ansible-playbook -i inventory playbooks/(playbook name).yaml`
+The Valheim server is ran in a tmux session named valheim.
 
-References:
+The Valheim server uses FEX and SteamCMD to emulate x86_64 architecture and download the requisite server files.
+
+The Valheim server will be installed as a systemd daemon and will auto restart in the event of a crash.
+
+# References
 
 https://docs.ansible.com/projects/ansible/latest/getting_started/index.html 
 
@@ -29,3 +41,4 @@ https://blog.kywa.io/tag/mineops/
 
 https://serverpackcreator.de/#/ 
 
+https://www.valheimgame.com/support/a-guide-to-dedicated-servers/

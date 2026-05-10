@@ -1,0 +1,9 @@
+---
+- name: Valheim Setup
+  hosts: valheim
+  tasks:
+    - name: Install Valheim
+      ansible.builtin.import_role:
+        name: valheim
+        tasks_from: install_valheim
+        public: true

@@ -1,0 +1,9 @@
+---
+- name: Stop Valheim
+  hosts: valheim
+  tasks:
+    - name: Stop Valheim
+      ansible.builtin.import_role:
+        name: valheim
+        tasks_from: stop_valheim
+        public: true

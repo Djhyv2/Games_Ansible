@@ -1,0 +1,9 @@
+---
+- name: Start Valheim
+  hosts: valheim
+  tasks:
+    - name: Start Valheim
+      ansible.builtin.import_role:
+        name: valheim
+        tasks_from: start_valheim
+        public: true

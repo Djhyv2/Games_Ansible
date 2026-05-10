@@ -1,0 +1,17 @@
+[Unit] 
+Description=Valheim Server
+After=local-fs.target network.target
+
+[Service]
+WorkingDirectory=/home/{{ ansible_user }}/bin/valheim_server
+Nice=5
+Restart=on-failure
+Type=forking
+User=opc
+
+ExecStart=/bin/bash -c "/usr/bin/tmux new -d -s valheim /home/{{ ansible_user }}/src/FEX/build/Bin/FEXBash /home/{{ ansible_user }}/bin/valheim_server/start_server.sh"
+ExecStop=/bin/bash -c "/usr/bin/tmux send-keys -t valheim C-c"
+ExecStop=/bin/bash -c "while ps -p $MAINPID > /dev/null; do /bin/sleep 1; done"
+
+[Install]
+WantedBy=default.target 
