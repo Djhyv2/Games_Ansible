@@ -30,6 +30,7 @@
   ansible.posix.synchronize:
     dest: /home/{{ ansible_user }}/bin/seven_days_server/Mods
     src: 'mods/'
+    delete: true
 - name: Open Firewall TCP
   ansible.posix.firewalld:
     port: '{{ seven_days_settings.server_port }}/tcp'
