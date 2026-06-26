@@ -1,0 +1,17 @@
+[Unit] 
+Description=seven_days Server
+After=local-fs.target network.target
+
+[Service]
+WorkingDirectory=/home/{{ ansible_user }}/bin/seven_days_server
+Nice=5
+Restart=on-failure
+Type=forking
+User=opc
+
+ExecStart=/bin/bash -c "/usr/bin/tmux new -d -s seven_days /home/{{ ansible_user }}/src/FEX/build/Bin/FEXBash '/home/{{ ansible_user }}/bin/seven_days_server/startserver.sh -configfile=serverconfig.xml'"
+ExecStop=/bin/bash -c "/usr/bin/tmux send-keys -t seven_days C-c"
+ExecStop=/bin/bash -c "while ps -p $MAINPID > /dev/null; do /bin/sleep 1; done"
+
+[Install]
+WantedBy=default.target 

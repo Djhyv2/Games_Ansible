@@ -10,97 +10,14 @@
   ansible.builtin.dnf:
     name: tmux
   become: true
-- name: Check if FEX Exists
-  ansible.builtin.stat:
-    path: /home/{{ ansible_user }}/src/FEX/build/FEXBash
-  register: fex_exists
-- name: Install FEX
-  when: fex_exists == false
-  block:
-    - name: Install Git
-      ansible.builtin.dnf:
-        name: git
-      become: true
-    - name: Install CMake
-      ansible.builtin.dnf:
-        name: cmake
-      become: true
-    - name: Install Clang
-      ansible.builtin.dnf:
-        name: clang
-      become: true
-    - name: Install QT5
-      ansible.builtin.dnf:
-        name: qt5-qtbase-devel
-      become: true
-    - name: Install QT5 QML
-      ansible.builtin.dnf:
-        name: qt5-qtdeclarative-devel
-      become: true
-    - name: Install llvm
-      ansible.builtin.dnf:
-        name: llvm
-      become: true
-    - name: Install lld
-      ansible.builtin.dnf:
-        name: lld
-      become: true
-    - name: Enable CodeReady Repo
-      community.general.dnf_config_manager:
-        name: ol9_codeready_builder
-        state: enabled
-    - name: Install Ninja
-      ansible.builtin.dnf:
-        name: ninja-build
-      become: true
-    - name: Clone Fex
-      ansible.builtin.git:
-        repo: https://github.com/FEX-Emu/FEX.git
-        dest: /home/{{ ansible_user }}/src/FEX
-        recursive: true
-    - name: Make FEX Build Dir
-      ansible.builtin.file:
-        path: /home/{{ ansible_user }}/src/FEX/build
-        state: directory
-    - name: Build FEX
-      ansible.builtin.shell: 
-        cmd: CC=clang CXX=clang++ cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DUSE_LINKER=lld -DENABLE_LTO=True -DBUILD_TESTING=False -DENABLE_ASSERTIONS=False -G Ninja ..;ninja
-      args:
-        chdir: /home/{{ ansible_user }}/src/FEX/build
-    - name: Install FEX
-      ansible.builtin.shell: 
-        cmd: ninja install
-      args:
-        chdir: /home/{{ ansible_user }}/src/FEX/build
-      become: true
-    - name: Install FEXRootFS
-      ansible.builtin.expect: 
-        command: /home/{{ ansible_user }}/src/FEX/build/Bin/FEXRootFSFetcher
-        responses:
-          .*Response.*: 1
-- name: Check if SteamCMD Exists
-  ansible.builtin.stat:
-    path: /home/{{ ansible_user }}/bin/steamcmd/steamcmd.sh
-  register: steamcmd_exists
-- name: Install SteamCMD
-  when: steamcmd_exists == false
-  block:
-  - name: Make SteamCMD Bin Dir
-    ansible.builtin.file:
-      path: /home/{{ ansible_user }}/bin/steamcmd
-      state: directory
-  - name: Download SteamCMD
-    ansible.builtin.get_url:
-      url: https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
-      dest: /home/{{ ansible_user }}/bin/steamcmd/steamcmd_linux.tar.gz
-  - name: Unarchive SteamCMD
-    ansible.builtin.unarchive:
-      src: /home/{{ ansible_user }}/bin/steamcmd/steamcmd_linux.tar.gz
-      dest: /home/{{ ansible_user }}/bin/steamcmd/
-      remote_src: yes
+- name: Install x86_64 Emulator
+  ansible.builtin.import_role: 
+    name: x86_64_emulator
+    tasks_from: install_x86_64_emulator
+    public: true
 - name: Install Valheim Dedicated Server
   ansible.builtin.shell:
-    cmd: /home/opc/src/FEX/build/Bin/FEXBash "/home/{{ ansible_user}}/bin/steamcmd/steamcmd.sh +force_install_dir /home/{{ ansible_user }}/bin/valheim_server +@sSteamCmdForcePlatformType linux +login anonymous +app_update 896660 validate +quit"
+    cmd: /home/{{ ansible_user }}/src/FEX/build/Bin/FEXBash "/home/{{ ansible_user}}/bin/steamcmd/steamcmd.sh +force_install_dir /home/{{ ansible_user }}/bin/valheim_server +@sSteamCmdForcePlatformType linux +login anonymous +app_update 896660 validate +quit"
 - name: Set Valheim Settings
   ansible.builtin.template:
     src: start_server.sh.j2

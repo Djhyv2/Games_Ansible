@@ -1,0 +1,3 @@
+default_seven_days_settings:
+  server_port: 26900
+  server_password: ''

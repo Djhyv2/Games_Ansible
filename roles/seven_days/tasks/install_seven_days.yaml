@@ -1,0 +1,56 @@
+- name: Overwrite Default Variables
+  ansible.builtin.set_fact:
+    seven_days_settings: '{{ default_seven_days_settings | ansible.builtin.combine(seven_days_settings | default([])) }}'
+- name: Stop 7 Days
+  ansible.builtin.import_role: 
+    name: seven_days
+    tasks_from: stop_seven_days
+    public: true
+- name: Install TMux
+  ansible.builtin.dnf:
+    name: tmux
+  become: true
+- name: Install x86_64 Emulator
+  ansible.builtin.import_role: 
+    name: x86_64_emulator
+    tasks_from: install_x86_64_emulator
+    public: true
+- name: Install 7 Days Dedicated Server
+  ansible.builtin.shell:
+    cmd: /home/{{ ansible_user }}/src/FEX/build/Bin/FEXBash "/home/{{ ansible_user}}/bin/steamcmd/steamcmd.sh +force_install_dir /home/{{ ansible_user }}/bin/seven_days_server +@sSteamCmdForcePlatformType linux +login anonymous +app_update 294420 validate +quit"
+- name: Set 7 Days Settings
+  ansible.builtin.template:
+    src: serverconfig.xml.j2
+    dest: /home/{{ ansible_user }}/bin/seven_days_server/serverconfig.xml
+- name: Set 7 Days Start Script
+  ansible.builtin.template:
+    src: startserver.sh.j2
+    dest: /home/{{ ansible_user }}/bin/seven_days_server/startserver.sh
+- name: Load Mods
+  ansible.posix.synchronize:
+    dest: /home/{{ ansible_user }}/bin/seven_days_server/Mods
+    src: 'mods/'
+- name: Open Firewall TCP
+  ansible.posix.firewalld:
+    port: '{{ seven_days_settings.server_port }}/tcp'
+    permanent: true
+    state: enabled
+    immediate: true
+  become: true
+- name: Open Firewall UDP
+  ansible.posix.firewalld:
+    port: '{{ seven_days_settings.server_port }}-{{ seven_days_settings.server_port + 3}}/udp'
+    permanent: true
+    state: enabled
+    immediate: true
+  become: true
+- name: Load 7 Days Service
+  ansible.builtin.template:
+    src: seven_days.service.j2
+    dest: /etc/systemd/system/seven_days.service
+  become: true
+- name: Start 7 Days
+  ansible.builtin.import_role: 
+    name: seven_days
+    tasks_from: start_seven_days
+    public: true

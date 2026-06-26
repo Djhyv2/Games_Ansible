@@ -33,6 +33,19 @@ The Valheim server uses FEX and SteamCMD to emulate x86_64 architecture and down
 
 The Valheim server will be installed as a systemd daemon and will auto restart in the event of a crash.
 
+# 7 Days to Die 
+
+Inventory should include any optional configurable serverconfig.xml values (See serverconfig.xml.j2 file for currently configurable options). New hosts will need to be added to the seven_days group in the inventory/hosts.yaml file.
+
+The 7 Days to Die server is ran in a tmux session named 7days.
+
+Any mods present in the roles/seven_days/files/mods folder will be installed on the server
+
+The 7 Days server uses FEX and SteamCMD to emulate x86_64 architecture and download the requisite server files.
+
+The 7 Days server will be installed as a systemd daemon and will auto restart in the event of a crash.
+
+
 # References
 
 https://docs.ansible.com/projects/ansible/latest/getting_started/index.html 
@@ -42,3 +55,5 @@ https://blog.kywa.io/tag/mineops/
 https://serverpackcreator.de/#/ 
 
 https://www.valheimgame.com/support/a-guide-to-dedicated-servers/
+
+https://developer.valvesoftware.com/wiki/7_Days_to_Die_Dedicated_Server 

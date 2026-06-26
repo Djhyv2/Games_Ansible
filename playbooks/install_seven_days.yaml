@@ -1,0 +1,9 @@
+---
+- name: 7 Days Setup
+  hosts: seven_days
+  tasks:
+    - name: Install 7 Days
+      ansible.builtin.import_role:
+        name: seven_days
+        tasks_from: install_seven_days
+        public: true

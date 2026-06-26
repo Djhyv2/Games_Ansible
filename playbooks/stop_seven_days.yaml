@@ -1,0 +1,9 @@
+---
+- name: Stop 7 Days
+  hosts: seven_days
+  tasks:
+    - name: Stop 7 Days
+      ansible.builtin.import_role:
+        name: seven_days
+        tasks_from: stop_seven_days
+        public: true
