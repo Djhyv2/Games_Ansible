@@ -5,6 +5,7 @@ minecraft_settings:
 valheim_settings:
   server_password: ChinaFerrari
 seven_days_settings:
+  beta: v2.6
   ai_smell_mode: 0
   xp_multiplier: 150
   day_night_length: 90

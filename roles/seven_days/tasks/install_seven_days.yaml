@@ -17,7 +17,7 @@
     public: true
 - name: Install 7 Days Dedicated Server
   ansible.builtin.shell:
-    cmd: /home/{{ ansible_user }}/src/FEX/build/Bin/FEXBash "/home/{{ ansible_user}}/bin/steamcmd/steamcmd.sh +force_install_dir /home/{{ ansible_user }}/bin/seven_days_server +@sSteamCmdForcePlatformType linux +login anonymous +app_update 294420 validate +quit"
+    cmd: /home/{{ ansible_user }}/src/FEX/build/Bin/FEXBash "/home/{{ ansible_user}}/bin/steamcmd/steamcmd.sh +force_install_dir /home/{{ ansible_user }}/bin/seven_days_server +@sSteamCmdForcePlatformType linux +login anonymous +app_update 294420 -beta {{ seven_days_settings.beta }} validate +quit"
 - name: Set 7 Days Settings
   ansible.builtin.template:
     src: serverconfig.xml.j2

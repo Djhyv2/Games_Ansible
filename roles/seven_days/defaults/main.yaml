@@ -1,6 +1,7 @@
 default_seven_days_settings:
   server_port: 26900
   server_password: ''
+  beta: public
   ai_smell_mode: 3
   xp_multiplier: 100
   day_night_length: 60
