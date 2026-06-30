@@ -1,3 +1,16 @@
 default_seven_days_settings:
   server_port: 26900
   server_password: ''
+  ai_smell_mode: 3
+  xp_multiplier: 100
+  day_night_length: 60
+  zombie_night_speed: 3
+  zombie_feral_speed: 3
+  zombie_blood_moon_speed: 3
+  air_drop_frequency: 72
+  jar_refund: 60
+  loot_abundance: 100
+  drop_on_death: 1
+  storm_frequency: 100
+  daily_quest_progression_limit: 4
+  party_shared_kill_range: 100

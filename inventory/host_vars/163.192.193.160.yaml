@@ -4,3 +4,17 @@ minecraft_settings:
   modpack: Jaffa_Factory_2
 valheim_settings:
   server_password: ChinaFerrari
+seven_days_settings:
+  ai_smell_mode: 0
+  xp_multiplier: 150
+  day_night_length: 90
+  zombie_night_speed: 1
+  zombie_feral_speed: 2
+  zombie_blood_moon_speed: 2
+  air_drop_frequency: 96
+  jar_refund: 0
+  loot_abundance: 150
+  drop_on_death: 3
+  storm_frequency: 0
+  daily_quest_progression_limit: 6
+  party_shared_kill_range: 1000
